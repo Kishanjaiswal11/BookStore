@@ -24,8 +24,8 @@ export const makePayment = async (req, res) => {
     payment_method_types: ["card"],
     line_items: line_item,
     mode: "payment",
-    success_url: "http://localhost:5173/success",
-    cancel_url: "http://localhost:5173/failure",
+    success_url: "https://book-store-nu-neon.vercel.app/success",
+    cancel_url: "https://book-store-nu-neon.vercel.app/failure",
   });
 
   res.json({ id: session.id });

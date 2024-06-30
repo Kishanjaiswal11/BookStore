@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Login from "./Login";
 import Logout from "./Logout";
 import { useAuth } from "../context/AuthProvider";
+import {useValue} from "../context/ValueProvider";
 
 function Navbar() {
   const [authUser, setAuthUser] = useAuth();
@@ -39,19 +41,25 @@ function Navbar() {
   const navItems = (
     <>
       <li>
-        <a href="/">Home</a>
+        <Link to="/">Home</Link>
       </li>
       <li>
-        <a href="/course">Course</a>
+        <Link to="/course">Course</Link>
       </li>
       <li>
-        <a>Contact</a>
+        <Link to="/contact">Contact</Link>
       </li>
       <li>
-        <a>About</a>
+        <Link>About</Link>
       </li>
     </>
   );
+  const [value, setValue] = useValue();
+  const [query, setQuery] = useState('');
+  const searchBook = async () => {
+    setValue(query);
+    console.log(value);
+  };
   return (
     <>
       <div
@@ -103,12 +111,15 @@ function Navbar() {
                   type="text"
                   className="grow outline-none rounded-md px-1 dark:bg-slate-900 dark:text-white"
                   placeholder="Search"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
                 />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"
                   fill="currentColor"
                   className="w-4 h-4 opacity-70"
+                  onClick={searchBook}
                 >
                   <path
                     fillRule="evenodd"

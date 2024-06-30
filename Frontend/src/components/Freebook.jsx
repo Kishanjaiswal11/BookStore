@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useContext, useEffect, useState } from "react";
+import { useValue } from "../context/ValueProvider";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -7,22 +7,26 @@ import Slider from "react-slick";
 import axios from "axios";
 
 import Cards from "./Cards";
+
 function Freebook() {
+  const [value, setValue] = useValue();
   const [book, setBook] = useState([]);
   useEffect(() => {
     const getBook = async () => {
       try {
-        const res = await axios.get("https://bookstore-pgmt.onrender.com/book");
+        const res = await axios.get(
+          `https://bookstore-pgmt.onrender.com/book/${value}`
+        );
 
         const data = res.data.filter((data) => data.category === "Free");
-        console.log(data);
+        console.log(value);
         setBook(data);
       } catch (error) {
         console.log(error);
       }
     };
     getBook();
-  }, []);
+  }, [value]);
 
   var settings = {
     dots: true,
